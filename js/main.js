@@ -6,10 +6,10 @@ function loadMilestones() {
 
   milestones.innerHTML = `${milestonesData
     .map(function (milestone) {
+      // console.log(milestone._id);
       return `<div class="milestone border-b" id="${milestone._id}">
       <div class="flex">
-        <div class="checkbox"><input type="checkbox" onclick="markMileStone(this, ${
-          milestone._id
+        <div class="checkbox"><input type="checkbox" onclick="markMileStone(this, ${milestone._id
         })" /></div>
         <div onclick="openMilestone(this, ${milestone._id})">
           <p>
@@ -82,13 +82,16 @@ function markMileStone(checkbox, id) {
     milestonesList.removeChild(item);
     doneList.appendChild(item);
   } else {
-    // back to main list
-    milestonesList.appendChild(item);
     doneList.removeChild(item);
+    milestonesList.appendChild(item);
+    const divs = document.querySelectorAll(".milestones .milestone"),
 
-    // task - do the sorting
-    // reload list
+    listItems = [];
+
+    divs.forEach(div => listItems.push(div));
+    listItems.sort((a, b) => a.id - b.id);
+    listItems.forEach(item => milestonesList.appendChild(item));
   }
 }
-
 loadMilestones();
+
